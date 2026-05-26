@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Netflix Ultra UI</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins',sans-serif;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:#000;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    body::-webkit-scrollbar{
+      width:8px;
+    }
+
+    body::-webkit-scrollbar-thumb{
+      background:#e50914;
+      border-radius:20px;
+    }
+
+    nav{
+      position:fixed;
+      top:0;
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 7%;
+      z-index:1000;
+      background:linear-gradient(to bottom,rgba(0,0,0,0.9),transparent);
+    }
+
+    .logo{
+      font-size:40px;
+      font-weight:800;
+      color:#e50914;
+      letter-spacing:2px;
+    }
+
+    nav ul{
+      display:flex;
+      list-style:none;
+      gap:30px;
+    }
+
+    nav ul li a{
+      color:white;
+      text-decoration:none;
+      transition:0.3s;
+      font-weight:500;
+    }
+
+    nav ul li a:hover{
+      color:#e50914;
+    }
+
+    .hero{
+      height:100vh;
+      background:
+      linear-gradient(to right,rgba(0,0,0,0.9),rgba(0,0,0,0.3)),
+      url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1974&auto=format&fit=crop') center/cover;
+      display:flex;
+      align-items:center;
+      padding:0 7%;
+    }
+
+    .hero-content{
+      max-width:700px;
+    }
+
+    .hero h1{
+      font-size:80px;
+      margin-bottom:20px;
+      line-height:1.1;
+    }
+
+    .hero p{
+      font-size:18px;
+      color:#ddd;
+      line-height:1.8;
+      margin-bottom:30px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      padding:16px 35px;
+      border:none;
+      border-radius:8px;
+      font-size:16px;
+      cursor:pointer;
+      transition:0.3s;
+      font-weight:600;
+    }
+
+    .play-btn{
+      background:white;
+      color:black;
+    }
+
+    .info-btn{
+      background:rgba(255,255,255,0.2);
+      color:white;
+      backdrop-filter:blur(10px);
+    }
+
+    .btn:hover{
+      transform:scale(1.05);
+    }
+
+    section{
+      padding:60px 7%;
+    }
+
+    .section-title{
+      font-size:34px;
+      margin-bottom:30px;
+      font-weight:700;
+    }
+
+    .movie-row{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+    }
+
+    .movie-card{
+      background:#111;
+      border-radius:18px;
+      overflow:hidden;
+      transition:0.4s;
+      position:relative;
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .movie-card:hover{
+      transform:translateY(-10px) scale(1.03);
+      box-shadow:0 15px 40px rgba(229,9,20,0.3);
+    }
+
+    .movie-card img{
+      width:100%;
+      height:320px;
+      object-fit:cover;
+    }
+
+    .movie-info{
+      padding:20px;
+    }
+
+    .movie-info h3{
+      margin-bottom:10px;
+      font-size:24px;
+    }
+
+    .movie-info p{
+      color:#bbb;
+      line-height:1.7;
+      margin-bottom:20px;
+      font-size:14px;
+    }
+
+    .movie-info a{
+      text-decoration:none;
+      color:white;
+      background:#e50914;
+      padding:12px 20px;
+      border-radius:8px;
+      display:inline-block;
+      transition:0.3s;
+    }
+
+    .movie-info a:hover{
+      background:#ff1e28;
+    }
+
+    .banner{
+      margin-top:80px;
+      border-radius:30px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .banner video{
+      width:100%;
+      border-radius:30px;
+    }
+
+    .banner-content{
+      position:absolute;
+      bottom:40px;
+      left:40px;
+      max-width:600px;
+    }
+
+    .banner-content h2{
+      font-size:50px;
+      margin-bottom:15px;
+    }
+
+    .banner-content p{
+      color:#ddd;
+      line-height:1.8;
+    }
+
+    footer{
+      text-align:center;
+      padding:40px;
+      color:#aaa;
+      border-top:1px solid rgba(255,255,255,0.1);
+      margin-top:60px;
+    }
+.movie-card img{
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  border-radius:15px;
+}
+    @media(max-width:900px){
+      .hero h1{
+        font-size:55px;
+      }
+
+      nav ul{
+        display:none;
+      }
+
+      .banner-content h2{
+        font-size:35px;
+      }
+    }
+
+    @media(max-width:600px){
+      .hero h1{
+        font-size:42px;
+      }
+
+      .hero p{
+        font-size:15px;
+      }
+
+      .section-title{
+        font-size:28px;
+      }
+    }
+  </style>
+
+</head>
+<body>
+
+  <nav>
+    <div class="logo">NETFLIX</div>
+
+```
+<ul>
+  <li><a href="#">Home</a></li>
+  <li><a href="#indian">Indian</a></li>
+  <li><a href="#drama">Drama</a></li>
+  <li><a href="#kids">Kids</a></li>
+  <li><a href="#adult">Adult</a></li>
+  <li><a href="#movies">Movies</a></li>
+  <li><a href="#series">Series</a></li>
+  <li><a href="#popular">Popular</a></li>
+  <li><a href="#mylist">My List</a></li>
+</ul>
+```
+
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Unlimited Movies, TV Shows & More.</h1>
+
+```
+  <p>
+    Experience the ultimate Netflix-inspired streaming platform UI with cinematic trailers,
+    trending movies, modern animations, responsive layouts, and premium visual design.
+  </p>
+
+  <div class="hero-buttons">
+    <input type="text" id="searchMovie" placeholder="Search Movies..." style="padding:16px 20px;border:none;border-radius:8px;background:#111;color:white;min-width:240px;">
+    <button class="btn play-btn" onclick="window.scrollTo({top:900,behavior:'smooth'})">▶ Play Now</button>
+    <button class="btn info-btn" onclick="showInfo()">More Info</button>
+  </div>
+</div>
+```
+
+  </section>
+
+  <section>
+    <h2 class="section-title">🔥 Trending Now</h2>
+
+```
+<div class="movie-row">
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg">
+    <div class="movie-info">
+      <h3>Interstellar</h3>
+      <p>A team of astronauts travels through a wormhole in space in an attempt to ensure humanity's survival.</p>
+      <a href="https://www.youtube.com/watch?v=zSWdZVtXT7E" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg">
+    <div class="movie-info">
+      <h3>The Dark Knight</h3>
+      <p>Batman faces the Joker, a criminal mastermind who wants to plunge Gotham City into chaos.</p>
+      <a href="https://www.youtube.com/watch?v=EXeTwQWrcwY" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+ <img src="https://wallpapercave.com/wp/wp11813484.jpg" alt="Dune">
+    <div class="movie-info">
+      <h3>Parasite</h3>
+      <p>A poor family schemes to become employed by a wealthy household by infiltrating their lives.</p>
+      <a href="https://www.youtube.com/watch?v=5xH0HfJHsaY" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+  <!-- Dune -->
+<img
+src="https://upload.wikimedia.org/wikipedia/en/8/8e/Dune_%282021_film%29.jpg"
+alt="Dune">
+    <div class="movie-info">
+      <h3>Dune</h3>
+      <p>Paul Atreides leads nomadic tribes in a battle to control the desert planet Arrakis.</p>
+      <a href="https://www.youtube.com/watch?v=n9xhJrPXop4" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+</div>
+```
+
+  </section>
+<section id="indian">
+
+  <h2 class="section-title">🇮🇳 Indian Blockbusters</h2>
+
+  <div class="movie-row">
+
+    <!-- RRR -->
+    <div class="movie-card">
+
+      <img
+        src="https://upload.wikimedia.org/wikipedia/en/d/d7/RRR_Poster.jpg"
+        alt="RRR">
+
+      <div class="movie-info">
+
+        <h3>RRR</h3>
+
+        <p>
+          A fictional story about two legendary revolutionaries
+          and their powerful fight for freedom.
+        </p>
+
+        <a href="https://www.youtube.com/watch?v=f_vbAtFSEc0"
+          target="_blank">
+          Watch Trailer
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Jawan -->
+    <div class="movie-card">
+
+      <img
+        src="https://upload.wikimedia.org/wikipedia/en/3/39/Jawan_film_poster.jpg"
+        alt="Jawan">
+
+      <div class="movie-info">
+
+        <h3>Jawan</h3>
+
+        <p>
+          Shah Rukh Khan delivers a mass action thriller packed
+          with emotion, action, and stylish visuals.
+        </p>
+
+        <a href="https://www.youtube.com/watch?v=MWOlnZSnXJo"
+          target="_blank">
+          Watch Trailer
+        </a>
+
+      </div>
+    </div>
+
+    <!-- KGF -->
+    <div class="movie-card">
+
+      <img
+        src="https://upload.wikimedia.org/wikipedia/en/d/d0/K.G.F_Chapter_2.jpg"
+        alt="KGF Chapter 2">
+
+      <div class="movie-info">
+
+        <h3>KGF Chapter 2</h3>
+
+        <p>
+          Rocky rises to power in the gold mines while facing
+          dangerous enemies and political threats.
+        </p>
+
+        <a href="https://www.youtube.com/watch?v=JKa05nyUmuQ"
+          target="_blank">
+          Watch Trailer
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Leo -->
+    <!-- Master -->
+<div class="movie-card">
+
+  <img
+  src="https://upload.wikimedia.org/wikipedia/en/5/53/Master_2021_poster.jpg"
+  alt="Master">
+
+  <div class="movie-info">
+
+    <h3>Master</h3>
+
+    <p>
+      Vijay plays a fearless professor who battles a dangerous gangster
+      in a powerful action-packed thriller.
+    </p>
+
+    <a href="https://www.youtube.com/watch?v=UTiXQcrLlv4"
+      target="_blank">
+      Watch Trailer
+    </a>
+
+  </div>
+
+</div>
+
+  </div>
+
+</section>
+```
+
+  </section>
+
+  <section id="drama">
+    <h2 class="section-title">🎭 Drama Collection</h2>
+
+```
+<div class="movie-row">
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/q719jXXEzOoYaps6babgKnONONX.jpg">
+    <div class="movie-info">
+      <h3>The Pursuit of Happyness</h3>
+      <p>A struggling salesman takes custody of his son while pursuing a better future.</p>
+      <a href="https://www.youtube.com/watch?v=89Kq8SDyvfg" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
+  <section id="kids">
+    <h2 class="section-title">🧸 Kids Entertainment</h2>
+
+```
+<div class="movie-row">
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/4nssBcQUBadCTBjrAkX46mVEKts.jpg">
+    <div class="movie-info">
+      <h3>Frozen 2</h3>
+      <p>Elsa and Anna journey beyond Arendelle to uncover magical secrets.</p>
+      <a href="https://www.youtube.com/watch?v=Zi4LMpSDccc" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
+  <section id="adult">
+    <h2 class="section-title">🍿 Adult Thrillers</h2>
+
+```
+<div class="movie-row">
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg">
+    <div class="movie-info">
+      <h3>The Godfather</h3>
+      <p>The aging patriarch transfers control of his empire to his reluctant son.</p>
+      <a href="https://www.youtube.com/watch?v=sY1S34973zA" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+</div>
+```
+
+  </section>
+
+  <section id="movies">
+    <h2 class="section-title">🎬 Popular Movies</h2>
+
+```
+<div class="movie-row">
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/kOVEVeg59E0wsnXmF9nrh6OmWII.jpg">
+    <div class="movie-info">
+      <h3>John Wick</h3>
+      <p>An ex-hitman comes out of retirement to track down the gangsters who destroyed his life.</p>
+      <a href="https://www.youtube.com/watch?v=2AUmvWm5ZDQ" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/original/or06FN3Dka5tukK1e9sl16pB3iy.jpg">
+    <div class="movie-info">
+      <h3>Avengers Endgame</h3>
+      <p>The Avengers assemble once more to reverse Thanos' actions and restore balance.</p>
+      <a href="https://www.youtube.com/watch?v=TcMBFSGVi1c" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/6KErczPBROQty7QoIsaa6wJYXZi.jpg">
+    <div class="movie-info">
+      <h3>Fight Club</h3>
+      <p>An insomniac office worker forms an underground fight club with a soap maker.</p>
+      <a href="https://www.youtube.com/watch?v=SUXWAEX2jlg" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg">
+    <div class="movie-info">
+      <h3>Joker</h3>
+      <p>A failed comedian descends into madness and becomes Gotham City's infamous villain.</p>
+      <a href="https://www.youtube.com/watch?v=zAGVQLHvwOY" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+</div>
+```
+
+  </section>
+
+  <section id="series">
+    <h2 class="section-title">📺 Top Series</h2>
+
+```
+<div class="movie-row">
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg">
+    <div class="movie-info">
+      <h3>Breaking Bad</h3>
+      <p>A chemistry teacher turned meth producer partners with a former student.</p>
+      <a href="https://www.youtube.com/watch?v=HhesaQXLuRY" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/49WJfeN0moxb9IPfGn8AIqMGskD.jpg">
+    <div class="movie-info">
+      <h3>Stranger Things</h3>
+      <p>A group of kids uncovers supernatural mysteries in their small town.</p>
+      <a href="https://www.youtube.com/watch?v=b9EkMc79ZSU" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg">
+    <div class="movie-info">
+      <h3>Money Heist</h3>
+      <p>A criminal mastermind plans the biggest heist in recorded history.</p>
+      <a href="https://www.youtube.com/watch?v=_InqQJRqGW4" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/x2LSRK2Cm7MZhjluni1msVJ3wDF.jpg">
+    <div class="movie-info">
+      <h3>Wednesday</h3>
+      <p>Wednesday Addams investigates mysteries at Nevermore Academy.</p>
+      <a href="https://www.youtube.com/watch?v=Di310WS8zLk" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+</div>
+```
+
+  </section>
+
+  <section>
+    <h2 class="section-title">🎥 Featured Trailer</h2>
+
+```
+<div class="banner">
+  <video controls autoplay muted loop>
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+  </video>
+
+  <div class="banner-content">
+    <h2>Featured Cinematic Experience</h2>
+    <p>
+      Enjoy immersive movie trailers with a premium Netflix-inspired experience designed using modern HTML, CSS, and JavaScript.
+    </p>
+  </div>
+</div>
+```
+
+  </section>
+
+```
+<section id="popular">
+<h2 class="section-title">⭐ Netflix Originals</h2>
+
+<div class="movie-row">
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/9yxep7oJdkj3Pla9TD9gKflRApY.jpg">
+    <div class="movie-info">
+      <h3>Extraction 2</h3>
+      <p>An elite mercenary returns for another dangerous rescue mission packed with action.</p>
+      <a href="https://www.youtube.com/watch?v=Y274jZs5s7s" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg">
+    <div class="movie-info">
+      <h3>Black Panther</h3>
+      <p>The king of Wakanda fights to protect his nation and legacy from powerful enemies.</p>
+      <a href="https://www.youtube.com/watch?v=xjDjIWPwcPU" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/2CAL2433ZeIihfX1Hb2139CX0pW.jpg">
+    <div class="movie-info">
+      <h3>Peaky Blinders</h3>
+      <p>A notorious gang family rises to power in Birmingham after World War I.</p>
+      <a href="https://www.youtube.com/watch?v=oVzVdvGIC7U" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/34OGjFEbHj0E3lE2w0iTUVq0CBz.jpg">
+    <div class="movie-info">
+      <h3>The Witcher</h3>
+      <p>A monster hunter struggles to find his place in a world of magic and war.</p>
+      <a href="https://www.youtube.com/watch?v=ndl1W4ltcmg" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+</div>
+```
+
+  </section>
+
+  <section id="mylist">
+    <h2 class="section-title">💎 Premium Experience</h2>
+
+```
+<div class="movie-row">
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg">
+    <div class="movie-info">
+      <h3>Inception</h3>
+      <p>A thief enters people's dreams to steal secrets and manipulate realities.</p>
+      <a href="https://www.youtube.com/watch?v=YoHD9XEInc0" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg">
+    <div class="movie-info">
+      <h3>Tenet</h3>
+      <p>A secret agent manipulates time to prevent a global catastrophe.</p>
+      <a href="https://www.youtube.com/watch?v=L3pk_TBkihU" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/5BwqwxMEjeFtdknRV792Svo0K1v.jpg">
+    <div class="movie-info">
+      <h3>Oppenheimer</h3>
+      <p>The story of the scientist behind the atomic bomb and its consequences.</p>
+      <a href="https://www.youtube.com/watch?v=uYPbbksJxIg" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+  <div class="movie-card">
+    <img src="https://image.tmdb.org/t/p/w500/d5NXSklXo0qyIYkgV94XAgMIckC.jpg">
+    <div class="movie-info">
+      <h3>Avatar</h3>
+      <p>A marine explores Pandora and becomes part of a battle for survival.</p>
+      <a href="https://www.youtube.com/watch?v=5PSNL1qE6VY" target="_blank">Watch Trailer</a>
+    </div>
+  </div>
+
+</div>
+```
+
+  </section>
+
+  <footer>
+    © 2026 Netflix Ultra UI Clone • Designed For Frontend Showcase Projects 🚀
+  </footer>
+
+  <script>
+
+    const movieCards = document.querySelectorAll('.movie-card');
+
+    movieCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-12px) scale(1.05)';
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0px) scale(1)';
+      });
+    });
+
+    const playButtons = document.querySelectorAll('.play-btn');
+
+    playButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        alert('🎬 Netflix Ultra Player Launching...');
+      });
+    });
+
+    function showInfo(){
+      alert('Netflix Ultra UI 🚀
+
+✔ Responsive Streaming Platform
+✔ Movie Categories
+✔ Search Experience
+✔ Real Trailer Buttons
+✔ Netflix Inspired Design');
+    }
+
+    const searchInput = document.getElementById('searchMovie');
+
+    searchInput.addEventListener('keyup', () => {
+      const value = searchInput.value.toLowerCase();
+      const cards = document.querySelectorAll('.movie-card');
+
+      cards.forEach(card => {
+        const title = card.innerText.toLowerCase();
+
+        if(title.includes(value)){
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    function smoothReveal(){
+      const reveals = document.querySelectorAll('.movie-card');
+
+      reveals.forEach(card => {
+        const windowHeight = window.innerHeight;
+        const revealTop = card.getBoundingClientRect().top;
+        const revealPoint = 100;
+
+        if(revealTop < windowHeight - revealPoint){
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0px)';
+        }
+      });
+    }
+
+    window.addEventListener('scroll', smoothReveal);
+
+    movieCards.forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(40px)';
+      card.style.transition = '0.6s ease';
+    });
+
+    smoothReveal();
+
+  </script>
+
+</body>
+</html>
+
+
